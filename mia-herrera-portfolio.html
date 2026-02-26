@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mia Herrera — IT & Cybersecurity</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #faf8f6;
+    --surface: #ffffff;
+    --surface2: #f4f0ed;
+    --border: #e8e0d8;
+    --border-soft: #ede6df;
+    --text: #2a2320;
+    --muted: #9e8e85;
+    --accent: #c2707a;      /* dusty rose */
+    --accent2: #a0789a;     /* soft mauve */
+    --accent3: #c4956a;     /* warm terracotta */
+    --accent-light: #f7eaec;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* SUBTLE DOT GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(194,112,122,0.12) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* SOFT GRADIENT WASH */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 10%, rgba(194,112,122,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 10% 90%, rgba(160,120,154,0.05) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 0;
+    background: rgba(250,248,246,0.90);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    font-style: italic;
+  }
+
+  .nav-logo span { color: var(--text); font-style: normal; }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 0 4rem;
+    position: relative;
+  }
+
+  .hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent-light);
+    border: 1px solid rgba(194,112,122,0.3);
+    color: var(--accent);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.4); }
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 .line2 {
+    display: block;
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    color: var(--muted);
+    font-size: 0.88rem;
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.25s;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 400;
+    box-shadow: 0 4px 16px rgba(194,112,122,0.25);
+  }
+  .btn-primary:hover { background: #b5616c; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(194,112,122,0.35); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  /* HERO STATS */
+  .hero-stats {
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+
+  .stat-item {
+    background: var(--surface);
+    padding: 1.5rem;
+    transition: background 0.2s;
+  }
+  .stat-item:hover { background: var(--accent-light); }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2.4rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-label { color: var(--muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .pill {
+    background: rgba(160,120,154,0.08);
+    border: 1px solid rgba(160,120,154,0.2);
+    color: var(--accent2);
+    font-size: 0.68rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 0; position: relative; z-index: 1; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--accent);
+    opacity: 0.8;
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: -0.01em;
+    font-style: italic;
+    color: var(--text);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* EXPERIENCE */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 180px 1px 1fr;
+    gap: 0 2rem;
+    padding-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .timeline-item.visible { opacity: 1; transform: translateY(0); }
+
+  .timeline-date {
+    text-align: right;
+    padding-top: 0.2rem;
+  }
+
+  .date-range {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  .date-location {
+    font-size: 0.7rem;
+    color: var(--muted);
+    opacity: 0.6;
+    margin-top: 0.3rem;
+  }
+
+  .timeline-line {
+    background: var(--border);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .timeline-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-top: 0.35rem;
+    flex-shrink: 0;
+    box-shadow: 0 0 10px rgba(194,112,122,0.4);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .timeline-content { padding-top: 0; }
+
+  .job-company {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 0.2rem;
+    color: var(--text);
+  }
+
+  .job-title {
+    color: var(--accent);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .job-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .job-bullets li {
+    color: var(--muted);
+    font-size: 0.82rem;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .job-bullets li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-card:hover { border-color: rgba(194,112,122,0.3); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(194,112,122,0.1); }
+  .project-card.visible { opacity: 1; transform: translateY(0); }
+
+  .project-tag {
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent2);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .project-tag::before { content: '✦'; font-size: 0.5rem; }
+
+  .project-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.7;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tech-tag {
+    font-size: 0.63rem;
+    padding: 0.25rem 0.65rem;
+    background: var(--accent-light);
+    border: 1px solid rgba(194,112,122,0.2);
+    color: var(--accent);
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  /* EDUCATION */
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    margin-bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .edu-card:hover { border-color: rgba(194,112,122,0.3); box-shadow: 0 8px 24px rgba(194,112,122,0.08); }
+  .edu-card.visible { opacity: 1; transform: translateY(0); }
+
+  .edu-school {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+    color: var(--text);
+  }
+
+  .edu-degree {
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .edu-gpa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(196,149,106,0.08);
+    border: 1px solid rgba(196,149,106,0.25);
+    color: var(--accent3);
+    font-size: 0.7rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+  }
+
+  .edu-date {
+    color: var(--muted);
+    font-size: 0.72rem;
+    text-align: right;
+    letter-spacing: 0.06em;
+  }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+  .skill-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .skill-group:hover { border-color: rgba(194,112,122,0.25); }
+  .skill-group.visible { opacity: 1; transform: translateY(0); }
+
+  .skill-group-title {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .skill-list li {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .skill-list li::before { content: '◇'; color: var(--accent); font-size: 0.55rem; }
+
+  /* CONTACT */
+  .contact-section {
+    background: linear-gradient(135deg, var(--surface) 0%, #fdf0f2 100%);
+    border: 1px solid var(--border);
+    padding: 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+
+  .contact-section::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 500px; height: 300px;
+    background: radial-gradient(ellipse, rgba(194,112,122,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .contact-desc {
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    font-size: 0.85rem;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    background: white;
+  }
+
+  .contact-link:hover { color: var(--accent); border-color: rgba(194,112,122,0.4); box-shadow: 0 4px 14px rgba(194,112,122,0.12); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-soft); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .timeline-item { grid-template-columns: 1fr; }
+    .timeline-date { text-align: left; }
+    .timeline-line { display: none; }
+    .contact-section { padding: 2rem; }
+    .edu-card { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="nav-logo" href="#"><span>mia</span>.herrera</a>
+    <ul class="nav-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">Available May 2026</div>
+        <h1>
+          Mia
+          <span class="line2">Herrera</span>
+        </h1>
+        <p class="hero-desc">
+          Information Technology student at William Paterson University with a minor in Humanities (Humanities Honors Track). Through my coursework, I've discovered a deep passion for cybersecurity — and I'm working toward building a career in the field.
+        </p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary">Get In Touch</a>
+          <a href="#projects" class="btn btn-outline">View Projects</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value">3.89</div>
+            <div class="stat-label">GPA / 4.0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">2+</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">3×</div>
+            <div class="stat-label">NCL Competitor</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">May<br>'26</div>
+            <div class="stat-label">Graduation</div>
+          </div>
+        </div>
+        <div class="skill-pills">
+          <span class="pill">Penetration Testing</span>
+          <span class="pill">Kali Linux</span>
+          <span class="pill">Burp Suite</span>
+          <span class="pill">Python</span>
+          <span class="pill">Networking</span>
+          <span class="pill">IT Support</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-date">
+          <div class="date-range">Sept 2024 – Present</div>
+          <div class="date-location">Wayne, NJ</div>
+        </div>
+        <div class="timeline-line"><div class="timeline-dot"></div></div>
+        <div class="timeline-content">
+          <div class="job-company">William Paterson University</div>
+          <div class="job-title">Technical Assistant</div>
+          <ul class="job-bullets">
+            <li>Delivered IT/technical support for campus faculty and students via walk-in, remote, and on-site troubleshooting.</li>
+            <li>Diagnosed and resolved software, hardware, and networking issues across the university campus.</li>
+            <li>Led macOS and Windows 11 upgrade rollouts — testing compatibility, coordinating scheduling, enrolling devices in Intune.</li>
+            <li>Identified and reported phishing attempts; guided faculty through incident response steps including Cisco scans.</li>
+            <li>Deployed imaged desktops, installed peripherals, and managed firmware updates for faculty and lab spaces.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">
+          <div class="date-range">Sept 2024 – Present</div>
+          <div class="date-location">Wayne, NJ</div>
+        </div>
+        <div class="timeline-line"><div class="timeline-dot"></div></div>
+        <div class="timeline-content">
+          <div class="job-company">Cyber Security / Networking Club</div>
+          <div class="job-title">Treasurer & Member</div>
+          <ul class="job-bullets">
+            <li>Competed in National Cyber League (NCL) Team Competition across Fall 2024, Spring 2025, & Fall 2025 seasons.</li>
+            <li>Completed NCL modules including password cracking and cryptography challenges.</li>
+            <li>Developed offensive/defensive cybersecurity skills through guided NCL Gymnasium challenges.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">
+          <div class="date-range">Jun 2023 – Sept 2024</div>
+          <div class="date-location">Hackensack, NJ</div>
+        </div>
+        <div class="timeline-line"><div class="timeline-dot"></div></div>
+        <div class="timeline-content">
+          <div class="job-company">AMC Theater</div>
+          <div class="job-title">Crew Member</div>
+          <ul class="job-bullets">
+            <li>Managed register operations with accurate cash handling and efficient customer service.</li>
+            <li>Directed guests and maintained a clean, organized venue environment.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Projects & Certifications</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-tag">Certification</div>
+        <div class="project-title">Google Cybersecurity Professional Certificate</div>
+        <div class="project-desc">
+          Applied cybersecurity principles through hands-on lab work to identify, analyze, and respond to security incidents. Gained practical experience in access control, network defense, and data protection aligned with industry standards.
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">Access Control</span>
+          <span class="tech-tag">Network Defense</span>
+          <span class="tech-tag">Data Protection</span>
+          <span class="tech-tag">Incident Response</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-tag">Certification</div>
+        <div class="project-title">CompTIA Ethical Hacker Pro Certification</div>
+        <div class="project-desc">
+          Enhanced technical proficiency across the full ethical hacking lifecycle — from reconnaissance and footprinting to vulnerability assessments, ethical exploitation, penetration testing, and covering tracks.
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">Reconnaissance</span>
+          <span class="tech-tag">Vulnerability Assessment</span>
+          <span class="tech-tag">Exploitation</span>
+          <span class="tech-tag">Pen Testing</span>
+        </div>
+      </div>
+
+      <div class="project-card" style="grid-column: 1 / -1;">
+        <div class="project-tag">Lab Project</div>
+        <div class="project-title">Web Application Penetration Testing — DVWA</div>
+        <div class="project-desc">
+          Deployed DVWA on Ubuntu using Apache, PHP, and MySQL in a virtualized bridged adapter environment. Configured Kali Linux and Burp Suite to intercept and analyze HTTP traffic. Executed brute force attacks and identified vulnerabilities including SQL Injection, XSS, Command Injection, and authentication flaws.
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">Kali Linux</span>
+          <span class="tech-tag">Burp Suite</span>
+          <span class="tech-tag">DVWA</span>
+          <span class="tech-tag">SQL Injection</span>
+          <span class="tech-tag">XSS</span>
+          <span class="tech-tag">Ubuntu</span>
+          <span class="tech-tag">Apache / PHP / MySQL</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Education</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="edu-card">
+      <div>
+        <div class="edu-school">William Paterson University</div>
+        <div class="edu-degree">B.S. in Information Technology, Minor in Humanities — Humanities Honors Track</div>
+        <div style="margin-top:0.5rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <span class="edu-gpa">⭐ GPA: 3.89 / 4.00</span>
+          <span class="pill">Honors College Scholarship</span>
+        </div>
+        <div style="margin-top:0.8rem; color:var(--muted); font-size:0.78rem;">
+          Relevant Courses: Penetration Testing & Ethical Hacking · Computer Science I & II · Networks I & II
+        </div>
+      </div>
+      <div class="edu-date">
+        Expected May 2026<br>Wayne, NJ
+      </div>
+    </div>
+
+    <div class="edu-card">
+      <div>
+        <div class="edu-school">Dumont High School</div>
+        <div class="edu-degree">High School Diploma</div>
+      </div>
+      <div class="edu-date">June 2022<br>Dumont, NJ</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Security & Networking</div>
+        <ul class="skill-list">
+          <li>Penetration Testing</li>
+          <li>Wireshark</li>
+          <li>Burp Suite</li>
+          <li>Cisco Packet Tracer</li>
+          <li>Ethical Hacking</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Operating Systems</div>
+        <ul class="skill-list">
+          <li>Kali Linux</li>
+          <li>Linux (Ubuntu)</li>
+          <li>Windows 10 / 11</li>
+          <li>macOS</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Programming</div>
+        <ul class="skill-list">
+          <li>Python</li>
+          <li>C++</li>
+          <li>HTML & CSS</li>
+          <li>MySQL Workbench</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">IT Support & Tools</div>
+        <ul class="skill-list">
+          <li>AWS</li>
+          <li>Web Help Desk</li>
+          <li>Quick Assist</li>
+          <li>Microsoft Intune</li>
+          <li>Zoom / Remote Support</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Software</div>
+        <ul class="skill-list">
+          <li>Microsoft Suite</li>
+          <li>Adobe Creative Cloud</li>
+          <li>Munki (macOS)</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Soft Skills</div>
+        <ul class="skill-list">
+          <li>Cross-department Communication</li>
+          <li>Ticketing & Documentation</li>
+          <li>Project Coordination</li>
+          <li>Team Collaboration</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Contact</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-section">
+      <div class="contact-title">Let's Connect</div>
+      <p class="contact-desc">Graduating May 2026. Open to internships, co-ops, and entry-level roles in cybersecurity and IT.</p>
+      <div class="contact-links">
+        <a href="mailto:herreramialynn04@gmail.com" class="contact-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          herreramialynn04@gmail.com
+        </a>
+        <a href="tel:2016659486" class="contact-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.12 6.12l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (201) 665-9486
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Mia Herrera — Built with ♥ and caffeine</p>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, (entry.target.dataset.delay || 0) * 100);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.timeline-item, .project-card, .edu-card, .skill-group').forEach((el, i) => {
+    el.dataset.delay = i % 3;
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
